@@ -1,0 +1,76 @@
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+!.env.template
+.streamlit/secrets.toml
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Type-checker and linter caches
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Streamlit cache
+.streamlit/cache/
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# Local databases and database exports
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+
+# Generated blog output
+output/*
+!output/.gitkeep
+
+# Generated images
+images/*
+!images/.gitkeep
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Local environment overrides
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

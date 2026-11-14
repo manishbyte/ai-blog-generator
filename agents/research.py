@@ -38,6 +38,7 @@ MAX_URL_CHARS = 500
 # ============================================================
 
 def _truncate(value: Any, limit: int) -> Optional[str]:
+    # Truncate a string to a maximum length, preserving whole words when possible.
     if value is None:
         return None
 
@@ -56,6 +57,7 @@ def _truncate(value: Any, limit: int) -> Optional[str]:
 # ============================================================
 
 def _scan_result_for_injection(item: dict[str, Any]) -> None:
+    # Scan title and snippet for potential prompt injection patterns and log them.
     """Log suspicious patterns without discarding potentially useful evidence."""
 
     fields = {
@@ -80,6 +82,7 @@ def _scan_result_for_injection(item: dict[str, Any]) -> None:
 
 
 def format_evidence_for_prompt(
+    # Serialize evidence items to JSON and wrap them as untrusted content for safe LLM insertion.
     evidence: list[EvidenceItem],
 ) -> str:
     """Format evidence behind an explicit untrusted-data boundary.
@@ -117,6 +120,7 @@ def format_evidence_for_prompt(
 # ============================================================
 
 def _tavily_search(
+    # Perform a synchronous Tavily search; wrapped in a thread to avoid blocking the event loop.
     query: str,
     max_results: int = RESULTS_PER_QUERY,
 ) -> list[dict[str, Any]]:
@@ -181,6 +185,7 @@ def _tavily_search(
 
 
 async def _tavily_search_async(
+    # Asynchronous wrapper that runs the blocking Tavily search in a thread.
     query: str,
     max_results: int = RESULTS_PER_QUERY,
 ) -> list[dict[str, Any]]:
@@ -198,6 +203,7 @@ async def _tavily_search_async(
 # ============================================================
 
 def _iso_to_date(value: Optional[str]) -> Optional[date]:
+    # Convert an ISO‑8601 date string (or similar) to a datetime.date, handling malformed values.
     if not value:
         return None
 
@@ -208,6 +214,7 @@ def _iso_to_date(value: Optional[str]) -> Optional[date]:
 
 
 def _deduplicate_results(
+    # Remove duplicate results based on URL while preserving order.
     results: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     seen: set[str] = set()
@@ -229,6 +236,7 @@ def _deduplicate_results(
 # ============================================================
 
 async def research_node(state: State) -> dict:
+    # Orchestrates concurrent searches, deduplication, freshness filtering, and validation of evidence.
     """Search Tavily concurrently and validate evidence."""
 
     raw_queries = state.get("queries", [])
